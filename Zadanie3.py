@@ -1,7 +1,5 @@
 import networkx as nx
-import matplotlib as plt
-
-
+#import matplotlib as plt
 
 def dist(x, y):
     return ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** 0.5
@@ -30,7 +28,6 @@ def line_intersection(line1, line2):
     y = det(d, ydiff) / div
     if (x1 < x and x2 > x and x3 < x < x4) or (y1 < y and y2 > y and y3 < y and y4 > y):
         return False
-        # return int(x), int(y)
     else:
         return True
 
@@ -39,15 +36,12 @@ n = int(input())
 start = list(map(int, input().split()))
 finish = list(map(int, input().split()))
 G = nx.Graph()
-x, y = map(int, start)
 
-##plt.text(x, y, 'start')
+##plt.text(start[0], start[1], 'start')
 ##plt.text(finish[0], finish[1], 'finish')
 PointsLine = []
-Point = {}
+Point = {'start': start.copy(), 'finish': finish.copy()}
 
-Point['start'] = start.copy()
-Point['finish'] = finish.copy()
 
 for i in range(1, n - 1):
     x1, y1, x2, y2, x3, y3 = map(int, input().split())
@@ -76,15 +70,12 @@ for i in Point:
             continue
         T = False
         S = [Point[i], Point[j]]
-        if not S in PointsLine:
+        if S not in PointsLine:
             for line in PointsLine:
                 if not line_intersection(S, line):
                     T = True
             if not T:
                 G.add_edge(i, j, weight=dist(Point[i], Point[j]))
             
-        
-road = nx.shortest_path(G, 'start', 'finish', weight='weight')
-
-for track in road:
+for track in nx.shortest_path(G, 'start', 'finish', weight='weight'):
     print(*Point[track])
