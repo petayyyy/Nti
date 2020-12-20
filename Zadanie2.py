@@ -25,9 +25,9 @@ set_attitude = rospy.ServiceProxy('set_attitude', srv.SetAttitude)
 set_rates = rospy.ServiceProxy('set_rates', srv.SetRates)
 land = rospy.ServiceProxy('land', Trigger)
             
-def main():                                                                                                      # Начальная функция
+def main():
   global col_det
-  col_det = ColorDetecting()                                                                                         # Обращение к классу Color_detect
+  col_det = ColorDetecting()
 
 n = 4 # Parametry karti
 
@@ -61,10 +61,12 @@ print('Podogdite obrabotky dannix')
 markers = col_det.point()
 
 k = 1
-f = open('Data.txt', 'w')
+f = open('Report.txt', 'w')
 print(markers)
-print('Nomer tochki       Coordinati                    Cvet raspoznanogo markera')
-f.write('Nomer tochki       Coordinati                    Cvet raspoznanogo markera\n')
+#print('Nomer tochki       Coordinati                    Cvet raspoznanogo markera')
+#f.write('Nomer tochki       Coordinati                    Cvet raspoznanogo markera\n')
+print('Point number       Coordinates                    Color')
+f.write('Point number       Coordinates                    Color\n')
 
 for j in markers.values():
     print("{}.             x={}                    y={}			{}".format(k, j[0], j[1],j[2]))
