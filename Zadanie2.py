@@ -61,7 +61,7 @@ print('Podogdite obrabotky dannix')
 markers = col_det.point()
 
 k = 1
-f = open('Data9.txt', 'w')
+f = open('Data.txt', 'w')
 print(markers)
 print('Nomer tochki       Coordinati                    Cvet raspoznanogo markera')
 f.write('Nomer tochki       Coordinati                    Cvet raspoznanogo markera\n')
