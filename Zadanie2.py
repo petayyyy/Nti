@@ -55,7 +55,7 @@ print navigate(x=0, y=0, z=1, speed=5, frame_id='aruco_map')
 rospy.sleep(6)
 
 land()
-print(col_det.mas)
+#print(col_det.mas)
 
 print('Podogdite obrabotky dannix') 
 markers = col_det.point()
