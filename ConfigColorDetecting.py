@@ -43,14 +43,11 @@ class ColorDetecting():
         for line in massiv_new:
             if max(x_last, line[0]) - min(x_last, line[0]) <= dist and max(y_last, line[1]) - min(y_last, line[1]) <= dist:
                 Points[numberLine].append(line)
-                
             else:
                 numberLine += 1
                 Points[numberLine] = [line]
             x_last, y_last = line[0], line[1]
-
         Point = {}
-
         for numberLine in Points:
             Point[numberLine] = [abs(round(sum(x)/len(x), 2)) for x in zip(*Points[numberLine])]
             if Point[numberLine][-1] == 0:
@@ -59,41 +56,40 @@ class ColorDetecting():
                 Point[numberLine][-1] = 'Green'
             elif Point[numberLine][-1] == 1:
                 Point[numberLine][-1] = 'Yelow'
-            
         return Point
-    def distance_x(self,x,z):
+    def distance_x(self, x, z):
         if x >= 120:
             return (-(x - 120))* z / 87.43 + 0.05
         else:
             return (120 - x)* z / 87.43
-    def distance_y(self,y,z):
+    def distance_y(self, y, z):
         if y >= 160:
             return (y - 160)* z / 94.38
         else:
             return -(160 - y)* z / 94.38
-    def callback(self,data):                                                                                         # Основная функция (data- изображения из типа msg)
+    def callback(self,data):  
         if self.Color == True:
-            try:                                                                                                         # Считывание и конвертация изображения в вид пригодный для дальнейшей работы (try- для отсутствия ошибки если топик будет пустой)
+            try:                                                 
                 img = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except:pass
             start = get_telemetry(frame_id='aruco_map')
             startz = rospy.wait_for_message('rangefinder/range', Range)
             Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
              
-            mask1 = cv2.inRange(Grey, self.red_low, self.red_high)                                                          # Создание облак точек для каждого цвета
-            mask2 = cv2.inRange(Grey, self.yellow_low, self.yellow_high)
-            mask3 = cv2.inRange(Grey, self.green_low, self.green_high)
+            mask1 = cv2.inRange(Grey, self.red_low, self.red_high)          #Red
+            mask2 = cv2.inRange(Grey, self.yellow_low, self.yellow_high)    #Yellow
+            mask3 = cv2.inRange(Grey, self.green_low, self.green_high)      #Green
             
             st1 = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 21), (10, 10))
             st2 = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11), (5, 5))
             thresh = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, st1)
             thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
             
-            _, red, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)                     # Поиск контуров в облаке точек (Красном)
-            for c in red:                                                                                                # Перебор каждого контура
+            _, red, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Red
+            for c in red:    
                 try:
                     y,x = 0,0
-                    moments = cv2.moments(c, 1)                                                                   # Метод создающий матрицу объекта
+                    moments = cv2.moments(c, 1)       
                     sum_y = moments['m01']
                     sum_x = moments['m10']
                     sum_pixel = moments['m00']
@@ -111,10 +107,10 @@ class ColorDetecting():
             
             thresh = cv2.morphologyEx(mask2 - mask3, cv2.MORPH_CLOSE, st1)
             thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
-            _, yellow, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)                        # И желтого
+            _, yellow, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)          #Yellow
             for c in yellow:
                 try:
-                    moments = cv2.moments(c, 1)                                                                   # Метод создающий матрицу объекта
+                    moments = cv2.moments(c, 1) 
                     sum_y = moments['m01']
                     sum_x = moments['m10']
                     sum_pixel = moments['m00']
@@ -132,10 +128,10 @@ class ColorDetecting():
             
             thresh = cv2.morphologyEx(mask3, cv2.MORPH_CLOSE, st1)
             thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
-            _, green, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)                        # И желтого
+            _, green, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)                        #Green
             for c in green:
                 try:   
-                    moments = cv2.moments(c, 1)                                                                   # Метод создающий матрицу объекта
+                    moments = cv2.moments(c, 1) 
                     sum_y = moments['m01']
                     sum_x = moments['m10']
                     sum_pixel = moments['m00']
@@ -150,9 +146,8 @@ class ColorDetecting():
                         cv2.putText(img, 'Green', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))
                         cv2.drawContours(img, [c], 0, (193,91,154), 2)                    
                 except:pass
-            
-            
+
             try:
-                self.image_pub.publish(self.bridge.cv2_to_imgmsg(img, "bgr8"))                                           # Вывод конвертипованного изображения
+                self.image_pub.publish(self.bridge.cv2_to_imgmsg(img, "bgr8")) 
             except CvBridgeError as e:
                 print(e)
