@@ -28,7 +28,7 @@ rospy.sleep(3)
 
 print navigate(x=0, y=0, z=1, speed=0.5, frame_id='aruco_map')
 rospy.sleep(3)
-main()
+#main()
 print('ready')
 
 print navigate(x=3, y=2, z=1, speed=10, frame_id='aruco_map')
