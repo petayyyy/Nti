@@ -39,6 +39,7 @@ print navigate(x=0, y=0, z=1, speed=0.5, frame_id='aruco_map')
 rospy.sleep(3)
 main()
 print('ready')
+col_det.Color = True
 
 for i in range (b+1):
     for j in range (n*2+1):
