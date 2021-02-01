@@ -50,12 +50,12 @@ class ColorDetecting():
         Point = {}
         for numberLine in Points:
             Point[numberLine] = [abs(round(sum(x)/len(x), 2)) for x in zip(*Points[numberLine])]
-            if Point[numberLine][-1] == 0:
+            '''if Point[numberLine][-1] == 0: 0 - yellow, 1 - green, 2 - blue, 3 - red
                 Point[numberLine][-1] = 'Red'
             elif Point[numberLine][-1] == 2:
                 Point[numberLine][-1] = 'Green'
             elif Point[numberLine][-1] == 1:
-                Point[numberLine][-1] = 'Yelow'
+                Point[numberLine][-1] = 'Yelow''''
         return Point
     def distance_x(self, x, z):
         if x >= 120:
