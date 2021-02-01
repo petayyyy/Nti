@@ -35,6 +35,27 @@ class ColorDetecting():
         self.mas = []
         self.bridge = CvBridge()                                                                                     
         self.image_sub = rospy.Subscriber("main_camera/image_raw_throttled",Image,self.callback)  #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    def landing(self, x, y, color_flag):
+        #print navigate(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
+        #rospy.sleep(10)
+        print set_position(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
+        #startz = rospy.wait_for_message('rangefinder/range', Range)
+        self.color_flag = color_flag
+        rospy.sleep(2)
+
+        whlile self.startz.range > 0.5:
+            if self.color_flag != -1:
+                print navigate(x=self.start.x + , y=self.start.y + , z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
+                rospy.sleep(3)
+            else:
+                return False
+        land()
+        rospy.sleep(7)
+        print navigate(x=0, y=0, z=1, speed=0.5, frame_id='body', auto_arm=True)
+        rospy.sleep(3)
+        self.color_flag = -1
+        return True
+    
     def point(self):
         numberLine = 0
         dist = 0.5
