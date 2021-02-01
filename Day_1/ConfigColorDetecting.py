@@ -30,6 +30,7 @@ class ColorDetecting():
         self.green_low = np.array([51,114,86])                                                                     
         self.green_high = np.array([142,255,255])
         
+        self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
         self.Color = False       
         self.mas = []
         self.bridge = CvBridge()                                                                                     
@@ -72,6 +73,7 @@ class ColorDetecting():
             try:                                                 
                 img = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except:pass
+            self.out.write(img)
             start = get_telemetry(frame_id='aruco_map')
             startz = rospy.wait_for_message('rangefinder/range', Range)
             Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
