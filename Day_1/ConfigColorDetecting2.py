@@ -43,7 +43,7 @@ class ColorDetecting():
         self.color_flag = color_flag
         rospy.sleep(2)
 
-        whlile self.startz.range > 0.5:
+        while self.startz.range > 0.5:
             if self.color_flag != -1:
                 print navigate(x=self.start.x + , y=self.start.y + , z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
                 rospy.sleep(3)
