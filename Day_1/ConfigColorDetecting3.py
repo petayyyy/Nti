@@ -25,15 +25,18 @@ class ColorDetecting():
         rospy.init_node('Color_detect', anonymous=True)                                                              
         self.image_pub = rospy.Publisher("Debug",Image,queue_size=10)                                               
         
-        self.red_low = np.array([0, 70, 50])                                                                       
-        self.red_high =  np.array([10, 255, 255])                                                                    
+        self.red_low = np.array([90,95,170])                                                                       
+        self.red_high =  np.array([120,125,235])                                                                    
       
-        self.yellow_low = np.array([21, 93, 86])                                                                    
-        self.yellow_high = np.array([118, 255, 255])
+        self.yellow_low = np.array([10,220,215])                                                                    
+        self.yellow_high = np.array([65,255,245])
 
-        self.green_low = np.array([51,114,86])                                                                     
-        self.green_high = np.array([142,255,255])
-
+        self.green_low = np.array([80,120,50])                                                                     
+        self.green_high = np.array([120,180,100])
+	
+	self.blue_low = np.array([160,140,0])                                                                             # Синего
+	self.blue_high = np.array([220,165,205])
+	
         self.x_dist = 0
         self.y_dist = 0
         
@@ -107,17 +110,41 @@ class ColorDetecting():
         img = cv2.undistort( img,np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]), np.array([ 2.15356885e-01,  -1.17472846e-01,  -3.06197672e-04,-1.09444025e-04,  -4.53657258e-03,   5.73090623e-01,-1.27574577e-01,  -2.86125589e-02,   0.00000000e+00,0.00000000e+00,   0.00000000e+00,   0.00000000e+00,0.00000000e+00,   0.00000000e+00]),np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]))
         self.start = get_telemetry(frame_id='aruco_map')
         self.startz = rospy.wait_for_message('rangefinder/range', Range)
-        Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        #Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             
-        mask1 = cv2.inRange(Grey, self.red_low, self.red_high)          #Red
-        mask2 = cv2.inRange(Grey, self.yellow_low, self.yellow_high)    #Yellow
-        mask3 = cv2.inRange(Grey, self.green_low, self.green_high)      #Green
+        mask1 = cv2.inRange(img, self.red_low, self.red_high)          #Red
+        mask2 = cv2.inRange(img, self.yellow_low, self.yellow_high)    #Yellow
+        mask3 = cv2.inRange(img, self.green_low, self.green_high)      #Green
+	mask4 = cv2.inRange(img, self.blue_low, self.blue_high)        #Blue
         
         st1 = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 21), (10, 10))
         st2 = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11), (5, 5))
         thresh = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, st1)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         
+	_, blue, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Blue
+        for c in red:    
+            try:
+                y,x = 0,0
+                moments = cv2.moments(c, 1)       
+                sum_y = moments['m01']
+                sum_x = moments['m10']
+                sum_pixel = moments['m00']
+                if sum_pixel > 500:
+                    y = int(sum_x / sum_pixel)
+                    x = int(sum_y / sum_pixel)
+                    x_d = self.distance_x(x,self.startz.range)
+                    y_d = self.distance_y(y,self.startz.range)
+                    if self.color_flag == 3:
+                        self.x_dist = self.start.x+x_d
+                        self.y_dist = self.start.y-y_d
+                    if math.sqrt(x_d**2+y_d**2) <= 1 and self.Color == True:
+                        print('Blue x_d,y_d',self.start.x+x_d,self.start.y-y_d)
+                        self.mas.append([self.start.x+x_d,self.start.y-y_d,3])
+                    cv2.putText(img, 'Blue', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))                       
+                    cv2.drawContours(img, [c], 0, (193,91,154), 2)
+            except:pass
+	
         _, red, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Red
         for c in red:    
             try:
