@@ -49,7 +49,7 @@ for i in range (4):
         if i % 2 == 0:
             print navigate(x=j*0.45 + 0.45, y=(6-i)*0.9, z=1, speed=0.25, frame_id='aruco_map')
         else:
-            print navigate(x=(n*2-j-3)*0.45 + 0.45, y=(6-i)*0.9, z=1, speed=0.25, frame_id='aruco_map')
+            print navigate(x=(n*2-j-5)*0.45 + 0.45, y=(6-i)*0.9, z=1, speed=0.25, frame_id='aruco_map')
         rospy.sleep(3)
 
 print navigate(x=0.45, y=6*0.45, z=1, speed=0.5, frame_id='aruco_map')
