@@ -6,7 +6,7 @@ import time
 import roslib
 import sys
 import rospy
-from ConfigColorDetecting3 import ColorDetecting
+from ConfigColorDetecting4 import ColorDetecting
 from sensor_msgs.msg import Image
 import threading
 from cv_bridge import CvBridge, CvBridgeError
