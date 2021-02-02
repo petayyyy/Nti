@@ -25,17 +25,17 @@ class ColorDetecting():
         rospy.init_node('Color_detect', anonymous=True)                                                              
         self.image_pub = rospy.Publisher("Debug",Image,queue_size=10)                                               
         
-        self.red_low = np.array([90,95,170])                                                                       
-        self.red_high =  np.array([120,125,235])                                                                    
-      
-        self.yellow_low = np.array([10,220,215])                                                                    
-        self.yellow_high = np.array([65,255,245])
+	self.red_low = np.array([55,55,170])                                                                             # Параметры необходимые для определения облак точек каждого цвета:
+	self.red_high = np.array([120,125,235])                                                                            # Красного
 
-        self.green_low = np.array([80,120,50])                                                                     
-        self.green_high = np.array([120,180,100])
-	
-	self.blue_low = np.array([160,140,0])                                                                             # ??????
-	self.blue_high = np.array([220,165,205])
+	self.blue_low = np.array([120,90,0])                                                                             # Синего
+	self.blue_high = np.array([160,135,20])
+
+	self.yellow_low = np.array([10,160,160])                                                                           # И желтого
+	self.yellow_high = np.array([120,230,220])
+
+	self.green_low = np.array([50,90,20])                                                                           # И желтого
+	self.green_high = np.array([80,160,60]
 	
         self.x_dist = 0
         self.y_dist = 0
