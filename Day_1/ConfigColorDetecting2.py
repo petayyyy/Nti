@@ -45,7 +45,7 @@ class ColorDetecting():
 
         while self.startz.range > 0.5:
             if self.color_flag != -1:
-                print navigate(x=self.start.x + , y=self.start.y + , z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
+                print navigate(x=self.x_dist, y=self.y_dist, z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
                 rospy.sleep(3)
             else:
                 return False
@@ -55,7 +55,6 @@ class ColorDetecting():
         rospy.sleep(3)
         self.color_flag = -1
         return True
-    
     def point(self):
         numberLine = 0
         dist = 0.5
@@ -72,13 +71,15 @@ class ColorDetecting():
         Point = {}
         for numberLine in Points:
             Point[numberLine] = [abs(round(sum(x)/len(x), 2)) for x in zip(*Points[numberLine])]
-            '''if Point[numberLine][-1] == 0: 0 - yellow, 1 - green, 2 - blue, 3 - red
-                Point[numberLine][-1] = 'Red'
-            elif Point[numberLine][-1] == 2:
-                Point[numberLine][-1] = 'Green'
-            elif Point[numberLine][-1] == 1:
-                Point[numberLine][-1] = 'Yelow''''
         return Point
+'''            if Point[numberLine][-1] == 0: 0 - yellow, 1 - green, 2 - blue, 3 - red
+                Point[numberLine][-1] = 0
+            elif Point[numberLine][-1] == 2:
+                Point[numberLine][-1] = 2
+            elif Point[numberLine][-1] == 1:
+                Point[numberLine][-1] = 1
+'''
+        
     def distance_x(self, x, z):
         if x >= 120:
             return (-(x - 120))* z / 87.43 + 0.05
