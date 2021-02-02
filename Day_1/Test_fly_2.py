@@ -6,7 +6,7 @@ import time
 import roslib
 import sys
 import rospy
-from ConfigColorDetecting import ColorDetecting
+from ConfigColorDetecting2 import ColorDetecting
 from sensor_msgs.msg import Image
 import threading
 from cv_bridge import CvBridge, CvBridgeError
@@ -41,6 +41,11 @@ main()
 print('ready')
 col_det.Color = True
 
+col_det.landing(3.5,0.5,3)
+col_det.landing(2,1,1)
+col_det.landing(3.5,0.5,0)
+
+"""
 for i in range (b+1):
     for j in range (n*2+1):
         if i % 2 == 0:
@@ -52,7 +57,7 @@ for i in range (b+1):
 
 print navigate(x=0, y=0, z=1, speed=5, frame_id='aruco_map')
 rospy.sleep(6)
-
+"""
 land()
 #print(col_det.mas)
 
