@@ -4,17 +4,18 @@ import cv2
 import time
 
 cam = cv2.VideoCapture(0)
-red_low = np.array([90,95,170])                                                                             # Параметры необходимые для определения облак точек каждого цвета:
+
+red_low = np.array([55,55,170])                                                                             # Параметры необходимые для определения облак точек каждого цвета:
 red_high = np.array([120,125,235])                                                                            # Красного
 
-blue_low = np.array([160,140,0])                                                                             # Синего
-blue_high = np.array([220,165,205])
+blue_low = np.array([120,90,0])                                                                             # Синего
+blue_high = np.array([160,135,20])
 
-yellow_low = np.array([10,220,215])                                                                           # И желтого
-yellow_high = np.array([65,255,245])
+yellow_low = np.array([10,160,160])                                                                           # И желтого
+yellow_high = np.array([65,200,200])
 
-green_low = np.array([80,120,50])                                                                           # И желтого
-green_high = np.array([120,180,100])
+green_low = np.array([60,120,20])                                                                           # И желтого
+green_high = np.array([100,160,60])
 ##
 cam = cv2.VideoCapture('Scinti_pogalyista (3).avi')
 from time import sleep
