@@ -15,6 +15,10 @@ from std_srvs.srv import Trigger
 from sensor_msgs.msg import Range
 
 get_telemetry = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
+set_position = rospy.ServiceProxy('set_position', srv.SetPosition)
+navigate = rospy.ServiceProxy('navigate', srv.Navigate)
+arming = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
+land = rospy.ServiceProxy('land', Trigger)
 
 class ColorDetecting():                                                                                              
     def __init__(self):                                                                                              
@@ -29,6 +33,9 @@ class ColorDetecting():
 
         self.green_low = np.array([51,114,86])                                                                     
         self.green_high = np.array([142,255,255])
+
+        self.x_dist = 0
+        self.y_dist = 0
         
         self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
         self.Color = False       
@@ -36,17 +43,22 @@ class ColorDetecting():
         self.bridge = CvBridge()                                                                                     
         self.image_sub = rospy.Subscriber("main_camera/image_raw_throttled",Image,self.callback)  #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def landing(self, x, y, color_flag):
-        #print navigate(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
+        print navigate(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
         #rospy.sleep(10)
-        print set_position(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
+        #navigate(x=x, y=y, z=1, frame_id='aruco_map')
+        #print((abs(self.start.x-x)+abs(self.start.y-y))*2)
+        rospy.sleep(10)
+        
         #startz = rospy.wait_for_message('rangefinder/range', Range)
         self.color_flag = color_flag
         rospy.sleep(2)
 
-        while self.startz.range > 0.5:
+        while self.startz.range > 0.6:
             if self.color_flag != -1:
+                print(self.x_dist,self.y_dist)
                 print navigate(x=self.x_dist, y=self.y_dist, z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
                 rospy.sleep(3)
+		print(self.x_dist,self.y_dist)
             else:
                 return False
         land()
@@ -54,7 +66,10 @@ class ColorDetecting():
         print navigate(x=0, y=0, z=1, speed=0.5, frame_id='body', auto_arm=True)
         rospy.sleep(3)
         self.color_flag = -1
+        self.x_dist = 0
+        self.y_dist = 0
         return True
+    
     def point(self):
         numberLine = 0
         dist = 0.5
@@ -72,14 +87,6 @@ class ColorDetecting():
         for numberLine in Points:
             Point[numberLine] = [abs(round(sum(x)/len(x), 2)) for x in zip(*Points[numberLine])]
         return Point
-'''            if Point[numberLine][-1] == 0: 0 - yellow, 1 - green, 2 - blue, 3 - red
-                Point[numberLine][-1] = 0
-            elif Point[numberLine][-1] == 2:
-                Point[numberLine][-1] = 2
-            elif Point[numberLine][-1] == 1:
-                Point[numberLine][-1] = 1
-'''
-        
     def distance_x(self, x, z):
         if x >= 120:
             return (-(x - 120))* z / 87.43 + 0.05
@@ -96,8 +103,8 @@ class ColorDetecting():
                 img = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except:pass
             self.out.write(img)
-            self.x_dist = 0
-            self.y_dist = 0
+#            self.x_dist = 0
+#            self.y_dist = 0
 
             self.start = get_telemetry(frame_id='aruco_map')
             self.startz = rospy.wait_for_message('rangefinder/range', Range)
