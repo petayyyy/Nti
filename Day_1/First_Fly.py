@@ -39,7 +39,7 @@ print navigate(x=0, y=0, z=1, speed=0.5, frame_id='aruco_map')
 rospy.sleep(3)
 main()
 
-print navigate(x=0.45, y=6*0.9, z=1, speed=0.5, frame_id='aruco_map')
+print navigate(x=0, y=6*0.9, z=1, speed=0.5, frame_id='aruco_map')
 rospy.sleep(12)
 
 print('ready color detect')
