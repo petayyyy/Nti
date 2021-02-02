@@ -123,7 +123,7 @@ class ColorDetecting():
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         
 	_, blue, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Blue
-        for c in red:    
+        for c in blue:    
             try:
                 y,x = 0,0
                 moments = cv2.moments(c, 1)       
