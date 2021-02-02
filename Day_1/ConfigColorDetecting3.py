@@ -104,7 +104,7 @@ class ColorDetecting():
         self.out.write(img)
 #            self.x_dist = 0
 #            self.y_dist = 0
-
+        img = cv2.undistort( img,np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]), np.array([ 2.15356885e-01,  -1.17472846e-01,  -3.06197672e-04,-1.09444025e-04,  -4.53657258e-03,   5.73090623e-01,-1.27574577e-01,  -2.86125589e-02,   0.00000000e+00,0.00000000e+00,   0.00000000e+00,   0.00000000e+00,0.00000000e+00,   0.00000000e+00]),np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]))
         self.start = get_telemetry(frame_id='aruco_map')
         self.startz = rospy.wait_for_message('rangefinder/range', Range)
         Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
