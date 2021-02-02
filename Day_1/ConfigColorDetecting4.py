@@ -35,7 +35,7 @@ class ColorDetecting():
 	self.yellow_high = np.array([120,230,220])
 
 	self.green_low = np.array([50,90,20])                                                                           # И желтого
-	self.green_high = np.array([80,160,60]
+	self.green_high = np.array([80,160,60])
 	
         self.x_dist = 0
         self.y_dist = 0
