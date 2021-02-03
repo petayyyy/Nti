@@ -37,7 +37,7 @@ def indication():
     rospy.sleep(0.5)
     if col_det.number != -1:
         led(col_det.number)
-        print navigate(x=self.x_dist, y=self.y_dist, z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
+        print navigate(x=col_det.number_x, y=col_det.number_y, z=1.5, speed=0.5, frame_id='aruco_map')
         rospy.sleep(1)
         land()
         rospy.sleep(4)
