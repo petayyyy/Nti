@@ -148,7 +148,7 @@ class ColorDetecting():
     
     def point(self):
         numberLine = 0
-        dist = 0.5
+        dist = 0.8
         massiv_new = sorted(self.mas, key=lambda k: [k[1], k[0]])
         Points = {numberLine: [massiv_new[0]]}
         x_last, y_last = massiv_new[0][0], massiv_new[0][1]
