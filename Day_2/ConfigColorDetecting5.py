@@ -188,7 +188,7 @@ class ColorDetecting():
         mask1 = cv2.inRange(img, self.red_low, self.red_high)          #Red
         mask2 = cv2.inRange(img, self.yellow_low, self.yellow_high)    #Yellow
         mask3 = cv2.inRange(img, self.green_low, self.green_high)      #Green
-	    mask4 = cv2.inRange(img, self.blue_low, self.blue_high)        #Blue
+	mask4 = cv2.inRange(img, self.blue_low, self.blue_high)        #Blue
         
         st1 = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 21), (10, 10))
         st2 = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11), (5, 5))
@@ -227,7 +227,7 @@ class ColorDetecting():
                         self.y_dist = self.start.y-y_d
                     if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Blue x_d,y_d',self.start.x+x_d,self.start.y-y_d)
-                        self.mas.append([self.start.x+x_d,self.start.y-y_d,3])
+                        self.mas.append([self.start.x+x_d,self.start.y-y_d,2])
                         self.Color = False
                     cv2.putText(img, 'Blue', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))                       
                     cv2.drawContours(img, [c], 0, (193,91,154), 2)
@@ -252,7 +252,7 @@ class ColorDetecting():
                         self.y_dist = self.start.y-y_d
                     if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Red x_d,y_d',self.start.x+x_d,self.start.y-y_d)
-                        self.mas.append([self.start.x+x_d,self.start.y-y_d,0])
+                        self.mas.append([self.start.x+x_d,self.start.y-y_d,3])
                         self.Color = False
                     cv2.putText(img, 'Red', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))                       
                     cv2.drawContours(img, [c], 0, (193,91,154), 2)
@@ -277,7 +277,7 @@ class ColorDetecting():
                         self.y_dist = self.start.y-y_d
                     if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Yellow x_d,y_d',self.start.x+x_d,self.start.y-y_d)
-                        self.mas.append([self.start.x+x_d,self.start.y-y_d,1])
+                        self.mas.append([self.start.x+x_d,self.start.y-y_d,0])
                         self.Color = False
                     cv2.putText(img, 'Yellow', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))
                     cv2.drawContours(img, [c], 0, (193,91,154), 2)                         
@@ -302,7 +302,7 @@ class ColorDetecting():
                         self.y_dist = self.start.y-y_d
                     if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Green x_d,y_d',self.start.x+x_d,self.start.y-y_d)
-                        self.mas.append([self.start.x+x_d,self.start.y-y_d,2])
+                        self.mas.append([self.start.x+x_d,self.start.y-y_d,1])
                         self.Color = False
                     cv2.putText(img, 'Green', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))
                     cv2.drawContours(img, [c], 0, (193,91,154), 2)                    
