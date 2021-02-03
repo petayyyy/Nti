@@ -3,7 +3,7 @@ from clover.srv import SetLEDEffect
 
 rospy.init_node('flight')
 
-set_effect = rospy.ServiceProxy('led/set_effect', SetLEDEffect)  # define proxy to ROS-service
+set_effect = ServiceProxy('led/set_effect', SetLEDEffect)  # define proxy to ROS-service
 
 def led(color): # 0=yellow, 1=green, 2=blue, 3=red, -1=norhing
     red, green, blue = 0, 0, 0
