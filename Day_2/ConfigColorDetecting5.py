@@ -198,7 +198,7 @@ class ColorDetecting():
         if self.Num == True:
             imGG= cv2.resize(img, (320,240))
             rez, xx, yy = self.detekt(imGG)
-            if rez >= 0 and rez rez <= 3:
+            if rez >= 0 and rez <= 3:
                 self.number = rez
                 self.number_x = yy*320//270
                 self.number_y = 240 - xx*240//270
@@ -232,7 +232,7 @@ class ColorDetecting():
                     cv2.putText(img, 'Blue', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))                       
                     cv2.drawContours(img, [c], 0, (193,91,154), 2)
             except:pass
-	    thresh = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, st1)
+	thresh = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, st1)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         _, red, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Red
         for c in red:    
