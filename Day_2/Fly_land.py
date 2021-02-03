@@ -201,8 +201,8 @@ rospy.sleep(7)
 
 land()
 print('//////////////////////////////////')
-print(DX_delivered[0]])
-print(DX_delivered[1]])
+print(DX_delivered[0])
+print(DX_delivered[1])
 print("Balance {} cargo".format(sum(mas)))
 print('//////////////////////////////////')
 
