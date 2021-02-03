@@ -39,7 +39,9 @@ class ColorDetecting():
 	
         self.x_dist = 0
         self.y_dist = 0
-        
+        self.number = -1
+        self.message = ''
+
         self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
         self.Color = False   
         self.Num = False   
@@ -73,6 +75,76 @@ class ColorDetecting():
         self.x_dist = 0
         self.y_dist = 0
         return True
+    def obrezka(self, mask):
+        x = 0
+        y = 0
+        w = 0
+        h = 0
+        mask[1][1] = 255
+        contours=cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        contours=contours[0]
+        if contours:
+            contours=sorted(contours, key=cv2.contourArea, reverse=True)
+            (x,y,w,h)=cv2.boundingRect(contours[0])
+            mask=mask[y:y+h, x:x+w]
+            yy = y+h//2
+            xx = x+w//2
+        return(xx,yy,mask,x,y,w,h)
+    def etalon(self):
+        self.e0 = cv2.imread("g0.png")
+        self.e0=cv2.inRange(e0,(20,71,7),(80,120,50)) 
+        self.e0 = cv2.medianBlur(e0, 5)
+        self.e1 = cv2.imread("g1.png")
+        self.e1=cv2.inRange(e1,(20,71,7),(80,120,50)) 
+        self.e1 = cv2.medianBlur(e1, 5)
+        self.e2 = cv2.imread("g2.png")
+        self.e2=cv2.inRange(e2,(20,71,7),(80,120,50)) 
+        self.e2 = cv2.medianBlur(e2, 5)
+        self.e3 = cv2.imread("g3.png")
+        self.e3=cv2.inRange(e3,(20,71,7),(80,120,50)) 
+        self.e3 = cv2.medianBlur(e3, 5)
+
+    def analiz(self,img1,img2):
+        s = 0
+        x = 100
+        y = 100
+        for i in range(x):
+            for j in range(y):
+                if img1[i][j] == img2[i][j]:
+                    s+=1
+        rez = (s*100//(x*y))
+        return(rez)
+
+    def detekt(self,img):
+        img2= cv2.resize(img, (300,300))
+        img2 = img2[15: 285, 15: 285] 
+        img2 = cv2.rotate(img2, cv2.ROTATE_90_CLOCKWISE) # против часовой
+        
+        mask=cv2.inRange(img2,(20,71,7),(80,120,50)) # порог как на видео
+        mask = cv2.medianBlur(mask, 5)
+        
+        xx,yy,mask2,x,y,w,h = obrezka(mask)
+        img3=img2[y:y+h, x:x+w]
+        
+        img3= cv2.resize(img3, (100,100))
+        mask2=cv2.inRange(img3,(20,71,7),(80,120,50)) # порог как на видео
+        mask2 = cv2.medianBlur(mask2, 5)
+
+        rez = 777
+        p = 1
+        if (analiz(mask2,self.e0)>80): 
+            rez = 0
+            self.message = 'D0_delivered products'
+        if (analiz(mask2,e1)>80):
+            rez = 1
+            self.message = 'D1_delivered clothes'
+        if (analiz(mask2,e2)>80):
+            rez = 2
+            self.message = 'D2_delivered fragile packaging'
+        if (analiz(mask2,e3)>80):
+            rez = 3
+            self.message = 'D3_delivered correspondence'
+        return(rez, xx, yy)
     
     def point(self):
         numberLine = 0
@@ -122,8 +194,22 @@ class ColorDetecting():
         st2 = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11), (5, 5))
         thresh = cv2.morphologyEx(mask4, cv2.MORPH_CLOSE, st1)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
-        
-	_, blue, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Blue
+
+        if self.Num == True:
+            imGG= cv2.resize(img, (320,240))
+            rez, xx, yy = self.detekt(imGG)
+            if rez >= 0 and rez rez <= 3:
+                self.number = rez
+                self.number_x = yy*320//270
+                self.number_y = 240 - xx*240//270
+                cv2.rectangle(img, (x, y), (x+2, y+2), (255, 0, 255), 2)
+                self.number_x = self.start.x + self.distance_x(self.number_x,self.startz.range)
+                self.number_y = self.start.y - self.distance_y(self.number_y,self.startz.range)
+                self.Num = False
+            else:
+                self.number = -1
+	    
+        _, blue, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Blue
         for c in blue:    
             try:
                 y,x = 0,0
