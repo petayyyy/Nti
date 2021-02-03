@@ -225,7 +225,7 @@ class ColorDetecting():
                     if self.color_flag == 3:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 1 and self.Color == True:
+                    if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Blue x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,3])
                         self.Color = False
@@ -250,7 +250,7 @@ class ColorDetecting():
                     if self.color_flag == 3:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 1 and self.Color == True:
+                    if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Red x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,0])
                         self.Color = False
@@ -275,7 +275,7 @@ class ColorDetecting():
                     if self.color_flag == 0:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 1 and self.Color == True:
+                    if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Yellow x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,1])
                         self.Color = False
@@ -300,7 +300,7 @@ class ColorDetecting():
                     if self.color_flag == 1:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 1 and self.Color == True:
+                    if math.sqrt(x_d**2+y_d**2) <= 0.8 and self.Color == True:
                         print('Green x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,2])
                         self.Color = False
