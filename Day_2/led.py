@@ -1,18 +1,11 @@
 from rospy import ServiceProxy
-from ros_ws281x.srv import SetLeds
-from ros_ws281x.msg import LEDState, LEDStateArray
-from std_msgs.msg import ColorRGBA
+from clover.srv import SetLEDEffect
 
-# Количество светодиодов в ленте
-NUM_LEDS = 60
+rospy.init_node('flight')
 
-set_leds = ServiceProxy("/led/set_leds", SetLeds, persistent=True)
-
+set_effect = rospy.ServiceProxy('led/set_effect', SetLEDEffect)  # define proxy to ROS-service
 
 def led(color): # 0=yellow, 1=green, 2=blue, 3=red, -1=norhing
-    led_msg = LEDStateArray()
-    led_msg.leds = []
-    
     red, green, blue = 0, 0, 0
     if color == 0:
         red, green, blue = 255, 255, 0
@@ -25,8 +18,4 @@ def led(color): # 0=yellow, 1=green, 2=blue, 3=red, -1=norhing
     elif color == -1:
         red, green, blue = 0, 0, 0
         
-    for i in range(NUM_LEDS): # Количество светодиодов в ленте
-        led = LEDState(i, ColorRGBA(red, green, blue, 0))
-        led_msg.leds.append(led) # Записываем состояние светодиода в сообщение
-
-    set_leds(led_msg)
+    set_effect(r=red, g=green, b=blue)
