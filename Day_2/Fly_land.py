@@ -30,6 +30,12 @@ def main():
   global col_det
   col_det = ColorDetecting()
 
+DX_delivered = [] 
+
+def D_delivered(number, tale):
+    global DX_delivered
+    DX_delivered.append('D{}_delivered to {} cargo'.format(number, tale))
+
 def indication():
     global mas, col_det
     rospy.sleep(3.5)
@@ -37,7 +43,7 @@ def indication():
     rospy.sleep(0.5)
     if col_det.number != -1:
         led(col_det.number)
-        print navigate(x=col_det.number_x, y=col_det.number_y, z=1.5, speed=0.5, frame_id='aruco_map')
+        print navigate(x=self.x_dist, y=self.y_dist, z=self.startz.range-0.1, speed=0.5, frame_id='aruco_map')
         rospy.sleep(1)
         land()
         rospy.sleep(4)
@@ -46,6 +52,7 @@ def indication():
         print navigate(x=0, y=0, z=1, speed=0.5, frame_id='body', auto_arm=True)
         rospy.sleep(3)
         print(col_det.message)
+        D_delivered(col_det.number,mas[col_det.number])
         mas[col_det.number] = 0
 
 print navigate(x=0, y=0, z=1, speed=0.5, frame_id='body', auto_arm=True)
@@ -134,12 +141,15 @@ for j in markers.values():
         mas[2] +=1
     elif j[2] == 3:
         mas[3] +=1
+        
+print('//////////////////////////////////')
 
 print("Balance {} cargo".format(sum(mas)))
 for i in range (4):
     print("Type {}: {} cargo".format(i, mas[i]))    
 
 print('ready point detect')
+print('//////////////////////////////////')
 
 navigate(x=0, y=2*0.9, z=1.8, speed=0.25, frame_id='aruco_map')
 indication()
@@ -190,3 +200,10 @@ print navigate(x=0, y=0, z=1.8, speed=0.5, frame_id='aruco_map')
 rospy.sleep(7)
 
 land()
+print('//////////////////////////////////')
+print(DX_delivered[0]])
+print(DX_delivered[1]])
+print("Balance {} cargo".format(sum(mas)))
+print('//////////////////////////////////')
+
+print('End popitki')
