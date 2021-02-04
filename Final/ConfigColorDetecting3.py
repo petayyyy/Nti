@@ -28,28 +28,28 @@ class ColorDetecting():
         
         self.simulator = simulator
         if self.simulator: # Параметры для симулятора
-            self.red_low = np.array([0,0,240])                                                                             # ????????? ??????????? ??? ??????????? ????? ????? ??????? ?????:
-            self.red_high = np.array([10,10,255])                                                                            # ????????
-
-            self.blue_low = np.array([240,0,0])                                                                             # ??????
+            self.red_low = np.array([0,0,240])                                                                             
+            self.red_high = np.array([10,10,255])                                                                          
+		
+            self.blue_low = np.array([240,0,0])
             self.blue_high = np.array([255,10,10])
 
-            self.yellow_low = np.array([0,240,240])                                                                           # ? ???????
+            self.yellow_low = np.array([0,240,240])
             self.yellow_high = np.array([10,255,255])
 
-            self.green_low = np.array([0,240,0])                                                                           # ? ???????
+            self.green_low = np.array([0,240,0])     
             self.green_high = np.array([10,255,10])
         else: # Параметры для реального полета
-            self.red_low = np.array([55,55,170])                                                                             # ????????? ??????????? ??? ??????????? ????? ????? ??????? ?????:
-            self.red_high = np.array([135,125,255])                                                                            # ????????
+            self.red_low = np.array([55,55,170])                            
+            self.red_high = np.array([135,125,255])                                                                           
 
-            self.blue_low = np.array([120,90,0])                                                                             # ??????
+            self.blue_low = np.array([120,90,0])                                                                             
             self.blue_high = np.array([210,140,80])
 
-            self.yellow_low = np.array([10,160,160])                                                                            # ? ???????
+            self.yellow_low = np.array([10,160,160])                                                                            
             self.yellow_high = np.array([120,230,220])
 
-            self.green_low = np.array([80,90,50])                                                                           # ? ???????
+            self.green_low = np.array([80,90,50])                                                                           
             self.green_high = np.array([115,160,95])
 
         self.x_dist = 0
@@ -71,13 +71,8 @@ class ColorDetecting():
         self.image_sub = rospy.Subscriber("main_camera/image_raw_throttled",Image,self.callback)  # Подписание на топик изображения
     def landing(self, x, y, color_flag):
         print navigate(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
-        #rospy.sleep(10)
-        #navigate(x=x, y=y, z=1, frame_id='aruco_map')
-        #print((abs(self.start.x-x)+abs(self.start.y-y))*2)
         rospy.sleep(10)
-        
-        #startz = rospy.wait_for_message('rangefinder/range', Range)
-        self.color_flag = color_flag
+                self.color_flag = color_flag
         rospy.sleep(2)
 
         while self.startz.range > 0.6:
@@ -96,7 +91,7 @@ class ColorDetecting():
         self.x_dist = 0
         self.y_dist = 0
         return True
-    def obrezka(self, mask):
+    def obrezka(self, mask): # Функция обрезки изображения
         x = 0
         y = 0
         w = 0
@@ -118,7 +113,7 @@ class ColorDetecting():
             #cv2.drawContours(img, [contoours], 0, (193,91,154), 2)
         #print(w, h) 
         return(xx,yy,mask,x,y,w,h)
-    def etalon(self):
+    def etalon(self): # Функция создания массок заготовленных снимков цифр
         self.e0 = cv2.imread("g0.png")
         self.e0 =cv2.inRange(self.e0,(20,71,7),(80,120,50)) 
         self.e0 = cv2.medianBlur(self.e0, 5)
@@ -132,7 +127,7 @@ class ColorDetecting():
         self.e3=cv2.inRange(self.e3,(20,71,7),(80,120,50)) 
         self.e3 = cv2.medianBlur(self.e3, 5)
 
-    def analiz(self,img1,img2):
+    def analiz(self,img1,img2): # Функция сравнивания цифр с изображением
         s = 0
         x = 100
         y = 100
@@ -144,7 +139,7 @@ class ColorDetecting():
 #        print(rez)
         return(rez)
 
-    def detekt(self,img):
+    def detekt(self,img): # Функция распознавания цифр
         img2= cv2.resize(img, (300,300))
         img2 = img2[15: 285, 15: 285] 
         img2 = cv2.rotate(img2, cv2.ROTATE_90_CLOCKWISE) # ?????? ???????
@@ -158,7 +153,7 @@ class ColorDetecting():
         mask2 = cv2.medianBlur(mask2, 5)
         #self.image_pub2.publish(self.bridge.cv2_to_imgmsg(mask2, "bgr8")) 
         try:
-            self.image_pub2.publish(self.bridge.cv2_to_imgmsg(img3, "bgr8"))                                      # ????? ? ????????? ?????
+            self.image_pub2.publish(self.bridge.cv2_to_imgmsg(img3, "bgr8"))                                       # Вывод топика для дебага 2
         except CvBridgeError as e:
             print(e)
         rez = 777
@@ -184,8 +179,6 @@ class ColorDetecting():
         p2 = self.analiz(mask2,self.e2)
         p3 = self.analiz(mask2,self.e3)
         #print(p0, p1, p2, p3, rez)
-#        print(self.message)
-#        print('g_analiz')
         return(rez, xx, yy)
     
     def point(self):
@@ -205,23 +198,23 @@ class ColorDetecting():
         for numberLine in Points:
             Point[numberLine] = [abs(round(sum(x)/len(x), 2)) for x in zip(*Points[numberLine])]
         return Point
-    def distance_x(self, x, z):
+    def distance_x(self, x, z): # Функция распознавания расстояния до маркера по х
         if x >= 120:
             return (-(x - 120))* z / 87.43 + 0.05
         else:
             return (120 - x)* z / 87.43
-    def distance_y(self, y, z):
+    def distance_y(self, y, z): # Функция распознавания расстояния до маркера по у
         if y >= 160:
             return (y - 160)* z / 94.38
         else:
             return -(160 - y)* z / 94.38
     def callback(self,data):  
         try:                                                 
-            img = self.bridge.imgmsg_to_cv2(data, "bgr8")
+            img = self.bridge.imgmsg_to_cv2(data, "bgr8") # Взятие изображения
         except:pass
 #            self.x_dist = 0
 #            self.y_dist = 0
-        if self.simulator == False:
+        if self.simulator == False: # Выравнивание изображения
             img = cv2.undistort( img,np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]), np.array([ 2.15356885e-01,  -1.17472846e-01,  -3.06197672e-04,-1.09444025e-04,  -4.53657258e-03,   5.73090623e-01,-1.27574577e-01,  -2.86125589e-02,   0.00000000e+00,0.00000000e+00,   0.00000000e+00,   0.00000000e+00,0.00000000e+00,   0.00000000e+00]),np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]))
         self.out.write(img)
         self.start = get_telemetry(frame_id='aruco_map')
@@ -238,7 +231,7 @@ class ColorDetecting():
         st2 = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11), (5, 5))
         thresh = cv2.morphologyEx(mask4, cv2.MORPH_CLOSE, st1)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
-        try:
+        try: # Вызов функции распознавания цифр
             if self.Num == True:
                 
                 imGG= cv2.resize(imGG, (320,240))
@@ -259,7 +252,7 @@ class ColorDetecting():
         except:pass
         _, blue, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Blue
         for c in blue:    
-            try:
+            try: # Распознавание синего груза
                 y,x = 0,0
                 moments = cv2.moments(c, 1)       
                 sum_y = moments['m01']
@@ -288,7 +281,7 @@ class ColorDetecting():
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         _, red, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   #Red
         for c in red:    
-            try:
+            try: # Распознавание красного груза
                 y,x = 0,0
                 moments = cv2.moments(c, 1)       
                 sum_y = moments['m01']
@@ -318,7 +311,7 @@ class ColorDetecting():
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         _, yellow, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)          #Yellow
         for c in yellow:
-            try:
+            try: # Распознавание желтого груза
                 moments = cv2.moments(c, 1) 
                 sum_y = moments['m01']
                 sum_x = moments['m10']
@@ -346,7 +339,7 @@ class ColorDetecting():
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, st2)
         _, green, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)                        #Green
         for c in green:
-            try:   
+            try:   # Распознавание зеленого груза
                 moments = cv2.moments(c, 1) 
                 sum_y = moments['m01']
                 sum_x = moments['m10']
@@ -369,10 +362,10 @@ class ColorDetecting():
                     #cv2.putText(img, 'Green', (y, x), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0))
                     #cv2.drawContours(img, [c], 0, (193,91,154), 2)
             except:pass
-        self.out2.write(img)
+        self.out2.write(img) 
         if self.x_dist == 0 and self.y_dist == 0:
             self.color_flag = -1
         try:
-            self.image_pub.publish(self.bridge.cv2_to_imgmsg(img, "bgr8")) 
+            self.image_pub.publish(self.bridge.cv2_to_imgmsg(img, "bgr8")) # Вывод топика для дебага 1
         except CvBridgeError as e:
             print(e)
