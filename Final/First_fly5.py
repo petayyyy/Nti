@@ -17,8 +17,8 @@ from std_srvs.srv import Trigger
 from sensor_msgs.msg import Range
 
 land = False # Esli land True
-high_1 = 1
-high_2 = 1.9
+high_1 = 1 # Высота над посылками
+high_2 = 1.9 # Высота над поинтами
 
 arming = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
 get_telemetry = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
@@ -32,7 +32,7 @@ land = rospy.ServiceProxy('land', Trigger)
             
 def main():
   global col_det
-  col_det = ColorDetecting(False) # Esli simul True, esli real False
+  col_det = ColorDetecting(False) # Параметры для симулятора-True, Параметры для реального полета-False
 
 DX_delivered = [] 
 
@@ -40,19 +40,19 @@ def D_delivered(number, tale):
   global DX_delivered
   DX_delivered.append('D{}_delivered to {} cargo'.format(number, tale))
 mas = [0]*4
-def indication():
+def indication(): # Функция Нахождения чисел
   global mas, col_det, land
   rospy.sleep(5.5)
   col_det.Num = True
   rospy.sleep(0.5)
   print(col_det.number)
   if col_det.number != -1:
-    led(col_det.number)
+    led(col_det.number) # Индикация
     d = col_det.message
     mas[col_det.number] = 0
     D_delivered(col_det.number,mas[col_det.number])
     #print navigate(x=col_det.number_x, y=col_det.number_y, z=col_det.startz.range-0.1, speed=0.5, frame_id='aruco_map')
-    if land == True:
+    if land == True: # Посадка если мы это захотели
         print navigate(x=0, y=0, z=-0.2, speed=0.5, frame_id='body')
         rospy.sleep(1)
         land()
@@ -74,7 +74,7 @@ print navigate(x=0, y=6*0.9, z=1.6, speed=0.5, frame_id='aruco_map')
 rospy.sleep(15)
 
 print('ready color detect')
-
+# Облет грузов
 #6
 navigate(x=0.45, y=6*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
 rospy.sleep(4.5)
@@ -264,6 +264,7 @@ col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
+# Вывод количества маркеров
 mas = [0]*4
 try:
   for i in range(len(col_det.mas)):
@@ -283,7 +284,7 @@ for i in range (4):
   print("Type {}: {} cargo".format(i, mas[i]))    
 
 print('//////////////////////////////////')
-
+# Обход Поинтов Посадки
 print('resdy point land detect')
 print navigate(x=0, y=3*0.9, z=high_2, speed=0.4, frame_id='aruco_map')
 rospy.sleep(6)
@@ -351,7 +352,8 @@ indication()
 #rint navigate(x=0, y=0, z=1.5, speed=0.5, frame_id='aruco_map')
 #rospy.sleep(9)
 land()
-
+# Посадка
+# Вывод данных
 print('//////////////////////////////////')
 try:
   print(DX_delivered[0])
@@ -363,7 +365,7 @@ print('land')
 rospy.sleep(15)
 land = True
 high_2 = 2
-
+# Повторный облет с посадкой
 print('resdy point land detect')
 print navigate(x=0, y=3*0.9, z=high_2, speed=0.4, frame_id='aruco_map')
 rospy.sleep(6)
