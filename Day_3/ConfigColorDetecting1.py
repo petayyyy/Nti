@@ -21,7 +21,7 @@ navigate = rospy.ServiceProxy('navigate', srv.Navigate)
 arming = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
 land = rospy.ServiceProxy('land', Trigger)
 
-class ColorDetecting(simulator):                                                                                              
+class ColorDetecting():                                                                                              
     def __init__(self, simulator):
         rospy.init_node('Color_detect', anonymous=True)                                                              
         self.image_pub = rospy.Publisher("Debug",Image,queue_size=10)                                               
@@ -217,7 +217,7 @@ class ColorDetecting(simulator):
         except:pass
 #            self.x_dist = 0
 #            self.y_dist = 0
-        if !self.simulator:
+        if self.simulator == False:
             img = cv2.undistort( img,np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]), np.array([ 2.15356885e-01,  -1.17472846e-01,  -3.06197672e-04,-1.09444025e-04,  -4.53657258e-03,   5.73090623e-01,-1.27574577e-01,  -2.86125589e-02,   0.00000000e+00,0.00000000e+00,   0.00000000e+00,   0.00000000e+00,0.00000000e+00,   0.00000000e+00]),np.array([[166.23942373073172,0,162.19011246829268],[0,166.5880923974026,109.82227735714285],[0,0,1]]))
         self.out.write(img)
         self.start = get_telemetry(frame_id='aruco_map')
