@@ -227,6 +227,7 @@ class ColorDetecting():
         self.start = get_telemetry(frame_id='aruco_map')
         self.startz = rospy.wait_for_message('rangefinder/range', Range)
         #Grey = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+	imGG = img.copy()
         img = img[85: 155, 125: 195]
         mask1 = cv2.inRange(img, self.red_low, self.red_high)          #Red
         mask2 = cv2.inRange(img, self.yellow_low, self.yellow_high)    #Yellow
@@ -240,7 +241,7 @@ class ColorDetecting():
         try:
             if self.Num == True:
                 
-                imGG= cv2.resize(img, (320,240))
+                imGG= cv2.resize(imGG, (320,240))
 #                print('////')
                 rez, xx, yy = self.detekt(imGG)
                 if rez >= 0 and rez <= 3:
