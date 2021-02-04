@@ -41,7 +41,7 @@ class ColorDetecting():
             self.green_high = np.array([10,255,10])
         else:
             self.red_low = np.array([55,55,170])                                                                             # ????????? ??????????? ??? ??????????? ????? ????? ??????? ?????:
-            self.red_high = np.array([135,125,25])                                                                            # ????????
+            self.red_high = np.array([135,125,255])                                                                            # ????????
 
             self.blue_low = np.array([120,90,0])                                                                             # ??????
             self.blue_high = np.array([210,140,80])
@@ -49,7 +49,7 @@ class ColorDetecting():
             self.yellow_low = np.array([10,160,160])                                                                            # ? ???????
             self.yellow_high = np.array([120,230,220])
 
-            self.green_low = np.array([50,90,20])                                                                           # ? ???????
+            self.green_low = np.array([80,90,50])                                                                           # ? ???????
             self.green_high = np.array([115,160,95])
 
         self.x_dist = 0
