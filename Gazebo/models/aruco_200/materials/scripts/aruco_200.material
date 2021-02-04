@@ -1,0 +1,15 @@
+material aruco/marker_200
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture aruco_marker_200.png
+                filtering none
+                scale 1.0 1.0
+            }
+        }
+    }
+}
