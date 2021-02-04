@@ -359,6 +359,7 @@ try:
 except:pass
 print("Balance {} cargo".format(sum(mas)))
 
+print('land')
 rospy.sleep(15)
 land = True
 high_2 = 2
