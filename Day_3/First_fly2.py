@@ -77,25 +77,25 @@ print('ready color detect')
 
 #6
 navigate(x=0.45, y=6*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=1.35, y=6*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=2.25, y=6*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=3.15, y=6*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
@@ -108,49 +108,49 @@ rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*2, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*3, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*4, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*5, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*6, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*7, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0, y=6*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
@@ -158,25 +158,25 @@ col_det.Color = False
 #5
 
 navigate(x=0.45, y=5*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=1.35, y=5*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=2.25, y=5*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=3.15, y=5*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
@@ -191,49 +191,49 @@ rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*2, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*3, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*4, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*5, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*6, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0.9*4 - 0.45*7, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=0, y=5*0.9-0.45, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
@@ -241,25 +241,25 @@ col_det.Color = False
 #4
 
 navigate(x=0.45, y=4*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=1.35, y=4*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=2.25, y=4*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
 
 navigate(x=3.15, y=4*0.9, z=high_1, speed=0.4, frame_id='aruco_map')
-rospy.sleep(3.5)
+rospy.sleep(4.5)
 col_det.Color = True
 rospy.sleep(0.5)
 col_det.Color = False
