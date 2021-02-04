@@ -17,8 +17,8 @@ from std_srvs.srv import Trigger
 from sensor_msgs.msg import Range
 
 land = True # Esli land True
-high_1 = 1.3
-high_2 = 2.2
+high_1 = 1.1
+high_2 = 2
 
 arming = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
 get_telemetry = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
