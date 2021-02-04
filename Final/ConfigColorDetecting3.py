@@ -23,11 +23,11 @@ land = rospy.ServiceProxy('land', Trigger)
 class ColorDetecting():                                                                                              
     def __init__(self, simulator):
         rospy.init_node('Color_detect', anonymous=True)                                                              
-        self.image_pub = rospy.Publisher("Debug",Image,queue_size=10)                                               
-        self.image_pub2 = rospy.Publisher("Debuuuuuug",Image,queue_size=10)
+        self.image_pub = rospy.Publisher("Debug",Image,queue_size=10) # Создание топика для дебага 1                                              
+        self.image_pub2 = rospy.Publisher("Debuuuuuug",Image,queue_size=10) # Создание топика для дебага 2
         
         self.simulator = simulator
-        if self.simulator:
+        if self.simulator: # Параметры для симулятора
             self.red_low = np.array([0,0,240])                                                                             # ????????? ??????????? ??? ??????????? ????? ????? ??????? ?????:
             self.red_high = np.array([10,10,255])                                                                            # ????????
 
@@ -39,7 +39,7 @@ class ColorDetecting():
 
             self.green_low = np.array([0,240,0])                                                                           # ? ???????
             self.green_high = np.array([10,255,10])
-        else:
+        else: # Параметры для реального полета
             self.red_low = np.array([55,55,170])                                                                             # ????????? ??????????? ??? ??????????? ????? ????? ??????? ?????:
             self.red_high = np.array([135,125,255])                                                                            # ????????
 
@@ -62,13 +62,13 @@ class ColorDetecting():
         self.e3 = 0
         self.etalon()
         
-        self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
+        self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240)) # Запись видео для отладки кода и цветовых порогов
         self.out2 = cv2.VideoWriter('Scinti_pogalyista2.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (70,70))
         self.Color = False   
         self.Num = False   
         self.mas = []
         self.bridge = CvBridge()                                                                                     
-        self.image_sub = rospy.Subscriber("main_camera/image_raw_throttled",Image,self.callback)  #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        self.image_sub = rospy.Subscriber("main_camera/image_raw_throttled",Image,self.callback)  # Подписание на топик изображения
     def landing(self, x, y, color_flag):
         print navigate(x=x, y=y, z=1, speed=0.5, frame_id='aruco_map')
         #rospy.sleep(10)
