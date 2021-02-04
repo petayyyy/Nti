@@ -64,7 +64,7 @@ class ColorDetecting():
         self.etalon()
         
         self.out = cv2.VideoWriter('Scinti_pogalyista.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
-        self.out2 = cv2.VideoWriter('Scinti_pogalyista2.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (320,240))
+        self.out2 = cv2.VideoWriter('Scinti_pogalyista2.avi',cv2.VideoWriter_fourcc('X','V','I','D'), 20, (70,70))
         self.Color = False   
         self.Num = False   
         self.mas = []
@@ -180,6 +180,11 @@ class ColorDetecting():
         if (self.analiz(mask2,self.e3)>sr):
             rez = 3
             self.message = 'D3_delivered correspondence'
+        p0 = self.analiz(mask2,self.e0)
+        p1 = self.analiz(mask2,self.e1)
+        p2 = self.analiz(mask2,self.e2)
+        p3 = self.analiz(mask2,self.e3)
+        print(p0, p1, p2, p3, rez)
 #        print(self.message)
 #        print('g_analiz')
         return(rez, xx, yy)
@@ -260,7 +265,9 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                if sum_pixel > 100:
+                print('Blue:',sum_pixel)
+                if sum_pixel > 300:
+                    #print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
                     x = int(sum_y / sum_pixel)*240//70
                     x_d = self.distance_x(x,self.startz.range)
@@ -269,7 +276,7 @@ class ColorDetecting():
                     if self.color_flag == 3:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 0.8*3 and self.Color == True:
+                    if self.Color == True:
                         print('Blue x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.Color = False
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,2])
@@ -287,7 +294,9 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                if sum_pixel > 100:
+                print('Red:',sum_pixel)
+                if sum_pixel > 300:
+#                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
                     x = int(sum_y / sum_pixel)*240//70
                     x_d = self.distance_x(x,self.startz.range)
@@ -297,7 +306,7 @@ class ColorDetecting():
                     if self.color_flag == 3:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 0.8*3 and self.Color == True:
+                    if self.Color == True:
                         print('Red x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.Color = False
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,3])
@@ -314,7 +323,9 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                if sum_pixel > 100:
+                print('Yellow:',sum_pixel)
+                if sum_pixel > 300:
+#                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
                     x = int(sum_y / sum_pixel)*240//70
                     x_d = self.distance_x(x,self.startz.range)
@@ -323,7 +334,7 @@ class ColorDetecting():
                     if self.color_flag == 0:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 0.8*3 and self.Color == True:
+                    if self.Color == True:
                         print('Yellow x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.Color = False
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,0])
@@ -340,7 +351,9 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                if sum_pixel > 100:
+                print('Green:',sum_pixel)
+                if sum_pixel > 300:
+#                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
                     x = int(sum_y / sum_pixel)*240//70
                     x_d = self.distance_x(x,self.startz.range)
@@ -349,7 +362,7 @@ class ColorDetecting():
                     if self.color_flag == 1:
                         self.x_dist = self.start.x+x_d
                         self.y_dist = self.start.y-y_d
-                    if math.sqrt(x_d**2+y_d**2) <= 0.8*3 and self.Color == True:
+                    if self.Color == True:
                         print('Green x_d,y_d',self.start.x+x_d,self.start.y-y_d)
                         self.Color = False
                         self.mas.append([self.start.x+x_d,self.start.y-y_d,1])
