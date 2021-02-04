@@ -148,13 +148,13 @@ class ColorDetecting():
         img2= cv2.resize(img, (300,300))
         img2 = img2[15: 285, 15: 285] 
         img2 = cv2.rotate(img2, cv2.ROTATE_90_CLOCKWISE) # ?????? ???????
-        mask=cv2.inRange(img2,(20,71,7),(80,125,80)) # ????? ??? ?? ?????
+        mask=cv2.inRange(img2,(20,71,7),(90,125,90)) # ????? ??? ?? ?????
         mask = cv2.medianBlur(mask, 5)
         
         xx,yy,mask2,x,y,w,h = self.obrezka(mask)
         img3=img2[y:y+h, x:x+w]
         img3= cv2.resize(img3, (100,100))
-        mask2=cv2.inRange(img3,(20,71,7),(80,125,80)) # ????? ??? ?? ?????
+        mask2=cv2.inRange(img3,(20,71,7),(90,125,90)) # ????? ??? ?? ?????
         mask2 = cv2.medianBlur(mask2, 5)
         #self.image_pub2.publish(self.bridge.cv2_to_imgmsg(mask2, "bgr8")) 
         try:
