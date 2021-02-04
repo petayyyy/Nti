@@ -42,7 +42,7 @@ def D_delivered(number, tale):
 mas = [0]*4
 def indication():
   global mas, col_det, land
-  rospy.sleep(4.5)
+  rospy.sleep(5.5)
   col_det.Num = True
   rospy.sleep(0.5)
   print(col_det.number)
