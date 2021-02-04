@@ -183,7 +183,7 @@ class ColorDetecting():
         p1 = self.analiz(mask2,self.e1)
         p2 = self.analiz(mask2,self.e2)
         p3 = self.analiz(mask2,self.e3)
-        print(p0, p1, p2, p3, rez)
+        #print(p0, p1, p2, p3, rez)
 #        print(self.message)
 #        print('g_analiz')
         return(rez, xx, yy)
@@ -265,7 +265,7 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                print('Blue:',sum_pixel)
+                #print('Blue:',sum_pixel)
                 if sum_pixel > 300:
                     #print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
@@ -294,7 +294,7 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                print('Red:',sum_pixel)
+                #print('Red:',sum_pixel)
                 if sum_pixel > 300:
 #                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
@@ -323,7 +323,7 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                print('Yellow:',sum_pixel)
+                #print('Yellow:',sum_pixel)
                 if sum_pixel > 300:
 #                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
@@ -351,7 +351,7 @@ class ColorDetecting():
                 sum_y = moments['m01']
                 sum_x = moments['m10']
                 sum_pixel = moments['m00']
-                print('Green:',sum_pixel)
+                #print('Green:',sum_pixel)
                 if sum_pixel > 300:
 #                    print(sum_pixel)
                     y = int(sum_x / sum_pixel)*320//70
