@@ -6,7 +6,7 @@ import time
 import roslib
 import sys
 import rospy
-from ConfigColorDetecting1 import ColorDetecting
+from ConfigColorDetecting2 import ColorDetecting
 from led import led
 from sensor_msgs.msg import Image
 import threading
